@@ -243,16 +243,11 @@ class Comment(db.Model):
             self.avatar_hash = hashlib.md5(
                     self.author_email.encode('utf-8')).hexdigest()
 
-    def gravatar(self, size=40, default='identicon', rating='g'):
-        # if request.is_secure:
-        #     url = 'https://secure.gravatar.com/avatar'
-        # else:
-        #     url = 'http://www.gravatar.com/avatar'
-        url = 'http://gravatar.duoshuo.com/avatar'
-        hash = self.avatar_hash or hashlib.md5(
-            self.author_email.encode('utf-8')).hexdigest()
-        return '{url}/{hash}?s={size}&d={default}&r={rating}'.format(
-            url=url, hash=hash, size=size, default=default, rating=rating)
+    def gravatar(self, size=40,
+                 default="https://example.com/static/images/defaultavatar.jpg",
+                 rating='g'):
+        return "https://www.gravatar.com/avatar/%s?%s" % (
+            hashlib.md5(self.email.lower()).hexdigest(), urllib.urlencode({'d': default, 's': str(size)}))
 
     @staticmethod
     def generate_fake(count=100):
