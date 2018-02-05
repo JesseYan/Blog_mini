@@ -247,7 +247,7 @@ class Comment(db.Model):
                  default="https://example.com/static/images/defaultavatar.jpg",
                  rating='g'):
         return "https://www.gravatar.com/avatar/%s?%s" % (
-            hashlib.md5(self.email.lower()).hexdigest(), urllib.urlencode({'d': default, 's': str(size)}))
+            hashlib.md5(self.author_email.lower()).hexdigest(), urllib.urlencode({'d': default, 's': str(size)}))
 
     @staticmethod
     def generate_fake(count=100):
